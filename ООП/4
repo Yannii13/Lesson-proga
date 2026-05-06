@@ -1,0 +1,23 @@
+class Werewolf:
+    def __init__(self, name):
+        self.__name = name  # Приватное имя
+        self.__form = "Человек"  # Приватная форма (начинаем с человека)
+        self.__power = 15  # Приватная сила (15 в человеческой форме)
+
+
+    def get_stats(self):
+        print(f"{self.__name} сейчас в форме: {self.__form}. Сила: {self.__power}")
+
+    def transform(self):#Публич метод для смены формы оборотня
+        if self.__form == "Человек":
+            self.__form = "Волк"
+            self.__power = 45
+            print(f"{self.__name} обрастает шерстью")
+        else:
+            self.__form = "Человек"
+            self.__power = 15
+            print(f"{self.__name} становится человеком.")
+werewolf = Werewolf("Люкан")
+werewolf.get_stats()#Люкан сейчас в форме Человек
+werewolf.transform()#Люкан обрастает шерстью
+werewolf.transform()#Люкан снова станов человеком.
