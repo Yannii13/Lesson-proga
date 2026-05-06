@@ -1,0 +1,53 @@
+class Weapon:
+    def __init__(self, name):
+        self.name = name
+
+
+    def use(self, monster):
+        pass  #Пустой метод
+
+class SilverSword(Weapon): #Доч класс cеребряный меч
+    def __init__(self):
+        super().__init__("Серебряный меч")
+
+
+    def use(self, monster):
+        print(f"Охотник взмахивает {self.name}. Серебро жжёт нечисть!")
+        monster.take_damage(30)
+
+class HolyWater(Weapon):#Доч класс cвятая вода
+    def __init__(self):
+        super().__init__("Святая вода")
+
+
+    def use(self, monster):
+        print(f"Охотник брызгает {self.name}. Святая сила проникает в плоть.")
+        monster.take_damage(20)
+
+class CrossbowBolt(Weapon):#Доч класс арбалет с болтом
+    def __init__(self):
+        super().__init__("Арбалет с болтом")
+
+
+    def use(self, monster):
+        print(f"Охотник стреляет из {self.name}. Болт вонзается.")
+        monster.take_damage(25)
+weapons = [SilverSword(), HolyWater(), CrossbowBolt()] # Полиморфизм.все объекты классов хран в одном списке
+class Zombie:
+    def __init__(self, name):
+        self.name = name
+        self.hp = 120
+
+
+    def show_status(self):
+        print(f"[{self.name}] HP: {self.hp}")
+    def get_hp(self):
+        return self.hp
+    def take_damage(self, damage):
+        self.hp -= damage
+        if self.hp < 0:
+            self.hp = 0
+        print(f"{self.name} получает {damage} урона. HP: {self.hp}")
+zombie = Zombie("Зомби")
+for w in weapons:
+    w.use(zombie)
