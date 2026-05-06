@@ -1,0 +1,85 @@
+import random
+class Monster:
+    def __init__(self, name, hp, dmg):# Приват атрибуты
+        self.__name = name
+        self.__hp = hp
+        self.__dmg = dmg
+
+
+    def get_name(self):#Геттеры
+        return self.__name
+    def get_hp(self):
+        return self.__hp
+    def get_dmg(self):
+        return self.__dmg
+    def set_hp(self, value):#Сеттер
+        if value < 0:
+            self.__hp = 0
+        else:
+            self.__hp = value
+    def is_alive(self): #Проверка
+        return self.__hp > 0
+    def show_status(self):#статус монстра
+        print(f"[{self.__name}] HP: {self.__hp}")
+    def take_damage(self, damage):
+        new_hp = self.__hp - damage
+        self.set_hp(new_hp)
+        print(f"{self.__name} получает {damage} урона. HP: {self.__hp}")
+    def attack_hunter(self, hunter): #Атака
+        print(f"{self.__name} атакует охотника")
+        hunter.take_damage(self.__dmg)
+
+class Zombie(Monster):
+    def __init__(self, name): #род класс
+        super().__init__(name, 120, 10)
+
+
+    def take_damage(self, damage):
+        new_hp = self.get_hp() - damage
+        self.set_hp(new_hp)
+        print(f"{self.get_name()} теряет конечность. Получено: {damage}. HP: {self.get_hp()}")
+
+class Vampire(Monster):
+    def __init__(self, name):#род  для вампира
+        super().__init__(name, 80, 15)
+
+
+    def take_damage(self, damage):
+        absorbed = 5
+        actual_damage = damage - absorbed  #Реал урон
+        if actual_damage < 0: #Защита
+            actual_damage = 0
+        new_hp = self.get_hp() - actual_damage
+        self.set_hp(new_hp)
+        print(f"{self.get_name()} поглощает {absorbed} урона. Получено: {actual_damage}. HP: {self.get_hp()}")
+class Ghost(Monster):
+    def __init__(self, name): #род класс призрака
+        super().__init__(name, 60, 20)
+    def take_damage(self, damage):
+        dodge_chance = 30  #Процент уклона
+        if random.randint(1, 100) <= dodge_chance:
+            print(f"{self.get_name()} уклоняется от удара. HP: {self.get_hp()}")
+        else:
+            new_hp = self.get_hp() - damage
+            self.set_hp(new_hp)
+            print(f"{self.get_name()} получает {damage} урона. HP: {self.get_hp()}")
+
+class Werewolf(Monster):
+    def __init__(self, name):#род класс оборотня
+        super().__init__(name, 100, 25)
+        self.__transformed = False #Приват флаг
+
+
+    def take_damage(self, damage):
+        new_hp = self.get_hp() - damage
+        self.set_hp(new_hp)
+        print(f"{self.get_name()} получает {damage} урона. HP: {self.get_hp()}")
+        if self.get_hp() < 50 and not self.__transformed:
+            self.__transformed = True
+            print(f"{self.get_name()} трансформируется в огромного волка. Сила увеличивается.")
+print("Проверка Vampire:") #вампир
+v = Vampire("Дракула")
+v.take_damage(30)  #поглощает 5 урона
+print("Проверка Zombie:")#зомби
+z = Zombie("Зомби")
+z.take_damage(30)  #теряет конечность
