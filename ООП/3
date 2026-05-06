@@ -1,0 +1,21 @@
+class Inventory:
+    def __init__(self, gold):
+        self.__gold = gold
+
+
+    def get_gold(self):
+        return f"В кошеле: {self.__gold} проклятых монет"
+
+    def change_gold(self, amount):# Вычис новый баланс
+        new_balance = self.__gold + amount
+        if new_balance < 0:
+            print("Недостаточно золота для сделки")
+        else:
+            self.__gold = new_balance
+bag = Inventory(50)
+print(bag.get_gold())  #В кошелке 50
+bag.change_gold(-30)  #Трат 30
+bag.change_gold(10)  #Наход 10
+print(bag.get_gold())  #В кошеле 30
+bag.change_gold(-100)  #потрат 10
+print(bag.get_gold())  # В кошеле 30(не изменилось)
